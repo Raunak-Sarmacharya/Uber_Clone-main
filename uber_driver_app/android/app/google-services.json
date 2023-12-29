@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "823643100458",
+    "project_id": "puffgotest",
+    "storage_bucket": "puffgotest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823643100458:android:f501444f1572c1d38eba53",
+        "android_client_info": {
+          "package_name": "com.transport.puffGoLetsGoIoS"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPXl8TW-s2LNhocH-7H7dHAj8jSoSvF6M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823643100458:android:349d5bb3e268c8e88eba53",
+        "android_client_info": {
+          "package_name": "com.transport.puff_go_lets_go"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPXl8TW-s2LNhocH-7H7dHAj8jSoSvF6M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
