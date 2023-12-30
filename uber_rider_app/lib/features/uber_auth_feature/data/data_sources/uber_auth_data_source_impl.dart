@@ -34,7 +34,7 @@ class UberAuthDataSourceImpl extends UberAuthDataSource {
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {},
       verificationFailed: (FirebaseAuthException e) {
-        Get.snackbar('error', e.code.toString(),
+        Get.snackbar('Cant verify your phone. Double check your number ', e.code.toString(),
             snackPosition: SnackPosition.BOTTOM);
       },
       codeSent: (String verificationId, int? forceResendingToken) async {

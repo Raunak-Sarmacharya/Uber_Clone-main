@@ -112,7 +112,7 @@ class _UberMapLiveTrackingPageState extends State<UberMapLiveTrackingPage> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                              const FaIcon(FontAwesomeIcons.longArrowAltRight,
+                              const FaIcon(FontAwesomeIcons.rightLong,
                                   color: Colors.white),
                               Flexible(
                                 child: Text(
@@ -191,9 +191,9 @@ class _UberMapLiveTrackingPageState extends State<UberMapLiveTrackingPage> {
                     borderRadius: BorderRadius.all(Radius.circular(25)),
                     color: Colors.black),
                 padding: const EdgeInsets.all(10),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
+                  children: [
                     Icon(Icons.refresh, color: Colors.white),
                     Text(
                       "Refresh",

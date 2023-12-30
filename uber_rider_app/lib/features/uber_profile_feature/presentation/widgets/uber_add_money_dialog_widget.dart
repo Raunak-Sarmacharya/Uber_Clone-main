@@ -4,6 +4,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:uber_rider_app/features/uber_profile_feature/presentation/getx/uber_profile_controller.dart';
 
+// tochange
 displayAddMoneyDialog(
     BuildContext context, UberProfileController uberProfileController) async {
   final _textFieldController = TextEditingController();
@@ -27,6 +28,7 @@ displayAddMoneyDialog(
                       .walletAddMoney(int.parse(_textFieldController.text));
                   Get.back();
                 } else {
+                  // tochange
                   Get.snackbar("invalid input!", "Enter valid amount!");
                 }
               },

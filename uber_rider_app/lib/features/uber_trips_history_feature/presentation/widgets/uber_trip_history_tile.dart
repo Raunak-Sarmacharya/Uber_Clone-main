@@ -51,14 +51,8 @@ class _TripHistoryTileState extends State<TripHistoryTile> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
+                      // tochange
                       onPressed: () {},
-                      child: widget.tripHistoryEntity.isCompleted == true
-                          ? const Text('COMPLETED')
-                          : widget.tripHistoryEntity.isArrived == true
-                              ? const Text('ONGOING')
-                              : widget.tripHistoryEntity.readyForTrip == true
-                                  ? const Text("WAITING")
-                                  : const Text('CANCELLED'),
                       style: ButtonStyle(
                         elevation: MaterialStateProperty.all(0.0),
                         backgroundColor: widget.tripHistoryEntity.isCompleted!
@@ -70,6 +64,13 @@ class _TripHistoryTileState extends State<TripHistoryTile> {
                                         Colors.blueAccent)
                                     : MaterialStateProperty.all(Colors.red),
                       ),
+                      child: widget.tripHistoryEntity.isCompleted == true
+                          ? const Text('COMPLETED')
+                          : widget.tripHistoryEntity.isArrived == true
+                              ? const Text('ONGOING')
+                              : widget.tripHistoryEntity.readyForTrip == true
+                                  ? const Text("WAITING")
+                                  : const Text('CANCELLED'),
                     ),
                     if (!widget.tripHistoryEntity.isArrived! &&
                         widget.tripHistoryEntity.readyForTrip!)
@@ -168,7 +169,7 @@ class _TripHistoryTileState extends State<TripHistoryTile> {
               child: ListTile(
                 title: Text(
                   widget.tripHistoryEntity.source.toString(),
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 leading: const Icon(Icons.my_location),
               ),
@@ -177,7 +178,7 @@ class _TripHistoryTileState extends State<TripHistoryTile> {
               child: ListTile(
                 title: Text(
                   widget.tripHistoryEntity.destination.toString(),
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 leading: const Icon(Icons.location_on_sharp),
               ),
@@ -191,16 +192,14 @@ class _TripHistoryTileState extends State<TripHistoryTile> {
                       Icons.watch_later_outlined),
                   widget.tripHistoryEntity.driverId != null
                       ? _iconWithTitle(
-                          " " +
-                              widget
+                          " ${widget
                                   .uberTripsHistoryController
                                   .tripDrivers
                                   .value[widget.tripHistoryEntity.driverId!.path
                                       .split("/")
                                       .last
                                       .trim()]!
-                                  .name
-                                  .toString(),
+                                  .name}",
                           FontAwesomeIcons.car)
                       : _iconWithTitle("  --", FontAwesomeIcons.car),
                   _iconWithTitle("${widget.tripHistoryEntity.tripAmount}",
@@ -218,12 +217,12 @@ class _TripHistoryTileState extends State<TripHistoryTile> {
                     showRatingAppDialog(context, widget.tripHistoryEntity,
                         widget.uberTripsHistoryController);
                   },
-                  child: const Text('Rate Your Journey'),
                   style: ButtonStyle(
                     backgroundColor: widget.tripHistoryEntity.isCompleted!
                         ? MaterialStateProperty.all(Colors.green)
                         : MaterialStateProperty.all(Colors.orange),
                   ),
+                  child: const Text('Rate Your Journey'),
                 ),
               ),
             ),

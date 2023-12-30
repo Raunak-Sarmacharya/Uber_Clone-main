@@ -42,10 +42,8 @@ class DriverDetails extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      uberMapController.req_accepted_driver_and_vehicle_data[
-                                  "overall_rating"]
-                              .toString() +
-                          " ⭐",
+                      "${uberMapController.req_accepted_driver_and_vehicle_data[
+                                  "overall_rating"]} ⭐",
                       style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
@@ -82,10 +80,8 @@ class DriverDetails extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "color :" +
-                      uberMapController
-                          .req_accepted_driver_and_vehicle_data["vehicle_color"]
-                          .toString(),
+                  "color :${uberMapController
+                          .req_accepted_driver_and_vehicle_data["vehicle_color"]}",
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 )
               ],
@@ -97,17 +93,13 @@ class DriverDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "model :" +
-                      uberMapController
-                          .req_accepted_driver_and_vehicle_data["vehicle_model"]
-                          .toString(),
+                  "model :${uberMapController
+                          .req_accepted_driver_and_vehicle_data["vehicle_model"]}",
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "company :" +
-                      uberMapController.req_accepted_driver_and_vehicle_data[
-                              "vehicle_company"]
-                          .toString(),
+                  "company :${uberMapController.req_accepted_driver_and_vehicle_data[
+                              "vehicle_company"]}",
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 )
               ],

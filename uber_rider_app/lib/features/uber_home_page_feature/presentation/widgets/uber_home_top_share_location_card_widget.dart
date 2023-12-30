@@ -35,8 +35,8 @@ uberHomeTopShareLocationCardWidget(UberHomeController uberHomeController) {
               onTap: () {
                 uberHomeController.getUserCurrentLocation();
               },
-              child: Row(
-                children: const [
+              child: const Row(
+                children: [
                   Text(
                     "Share location  ",
                     style: TextStyle(
@@ -45,7 +45,7 @@ uberHomeTopShareLocationCardWidget(UberHomeController uberHomeController) {
                         color: Colors.white),
                   ),
                   FaIcon(
-                    FontAwesomeIcons.longArrowAltRight,
+                    FontAwesomeIcons.rightLong,
                     color: Colors.white,
                   )
                 ],

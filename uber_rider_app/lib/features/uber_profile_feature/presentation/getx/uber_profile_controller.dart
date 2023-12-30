@@ -42,7 +42,7 @@ class UberProfileController extends GetxController {
       isLoaded.value = true;
     });
   }
-
+// tochange
   pickProfileImg() async {
     String riderId = await uberAuthGetUserUidUseCase.call();
     String profileUrl = await uberAddProfileImgUseCase.call(riderId);
@@ -50,7 +50,7 @@ class UberProfileController extends GetxController {
         snackPosition: SnackPosition.BOTTOM);
     riderData['profileUrl'] = profileUrl;
   }
-
+// tochange
   updateRiderProfile(String name, String email, String city, String homeAddress,
       String workAddress) async {
     final riderEntity = RiderEntity(
@@ -67,7 +67,7 @@ class UberProfileController extends GetxController {
     Get.snackbar("Done.", "Profile Updated!",
         snackPosition: SnackPosition.BOTTOM);
   }
-
+// tochange
   signOut() async {
     await uberAuthSignOutUseCase.call();
     Get.snackbar('GoodBye..', "See you later.",

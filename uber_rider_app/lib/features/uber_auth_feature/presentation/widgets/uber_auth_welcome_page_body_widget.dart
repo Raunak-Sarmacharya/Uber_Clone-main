@@ -24,7 +24,7 @@ Widget uberAuthTopWelcomeScreenBody() {
         height: 10,
       ),
       const Text(
-        "Expand Your Travel Experience with Uber.",
+        "Expand Your Travel Experience with Puffy.",
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,

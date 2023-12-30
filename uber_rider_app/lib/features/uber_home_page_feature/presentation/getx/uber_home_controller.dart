@@ -11,8 +11,8 @@ import 'package:uber_rider_app/features/uber_home_page_feature/domain/use_cases/
 class UberHomeController extends GetxController {
   final GetUserCurrentLocationUsecase getUserCurrentLocationUsecase;
 
-  var currentLat = 23.030357.obs;
-  var currentLng = 72.517845.obs;
+  var currentLat = 47.5620013.obs;
+  var currentLng = 52.7440212.obs;
   final Completer<GoogleMapController> controller = Completer();
 
   // this was commented already ffrom before
@@ -24,7 +24,7 @@ class UberHomeController extends GetxController {
   UberHomeController({required this.getUserCurrentLocationUsecase});
 
   getUserCurrentLocation() async {
-    animateCamera(); //if allowded firstly
+    animateCamera(); //if allowed firstly
     LocationPermission permission;
     await Geolocator.requestPermission();
     permission = await Geolocator.checkPermission();

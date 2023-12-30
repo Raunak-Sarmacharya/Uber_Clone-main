@@ -93,7 +93,7 @@ class UberMapDataSourceImpl extends UberMapDataSource {
     // print(vehicleRent.car);
     return vehicleRent;
     }catch(e){
-      Get.snackbar("Show me the erroro", e.toString());
+      Get.snackbar("Show me the error", e.toString());
       return RentalChargeModel(
         auto_rickshaw: 0, car: 0, bike: 0);
     }

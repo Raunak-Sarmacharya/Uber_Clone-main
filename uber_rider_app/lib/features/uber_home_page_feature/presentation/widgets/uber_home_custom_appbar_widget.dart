@@ -17,7 +17,7 @@ uberHomeCustomAppBarWidget() {
           Get.to(() => const UberProfilePage());
         },
         child: const FaIcon(
-          FontAwesomeIcons.solidUserCircle,
+          FontAwesomeIcons.solidCircleUser,
           size: 45,
         ),
       )

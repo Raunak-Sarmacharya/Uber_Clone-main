@@ -72,8 +72,8 @@ class _UberProfilePageState extends State<UberProfilePage> {
                         .toString()),
                   ),
                 ),
-                subtitle: Row(
-                  children: const [
+                subtitle: const Row(
+                  children: [
                     FaIcon(
                       FontAwesomeIcons.solidStar,
                       size: 12,
@@ -102,8 +102,8 @@ class _UberProfilePageState extends State<UberProfilePage> {
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(12)),
                             color: Colors.grey[100]),
-                        child: Column(
-                          children: const [
+                        child: const Column(
+                          children: [
                             FaIcon(FontAwesomeIcons.hireAHelper),
                             SizedBox(
                               height: 5,
@@ -121,8 +121,8 @@ class _UberProfilePageState extends State<UberProfilePage> {
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(12)),
                             color: Colors.grey[100]),
-                        child: Column(
-                          children: const [
+                        child: const Column(
+                          children: [
                             FaIcon(FontAwesomeIcons.wallet),
                             SizedBox(
                               height: 5,
@@ -144,8 +144,8 @@ class _UberProfilePageState extends State<UberProfilePage> {
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(12)),
                               color: Colors.grey[100]),
-                          child: Column(
-                            children: const [
+                          child: const Column(
+                            children: [
                               FaIcon(FontAwesomeIcons.solidClock),
                               SizedBox(
                                 height: 5,
@@ -171,6 +171,7 @@ class _UberProfilePageState extends State<UberProfilePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // tochange
                           const Text(
                             "Uber Cash",
                             style: TextStyle(
@@ -191,7 +192,7 @@ class _UberProfilePageState extends State<UberProfilePage> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(12)),
                                   color: Colors.grey[200]),
-                              child: const Text("Add ₹",
+                              child: const Text("Add \$",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16)),
@@ -206,7 +207,7 @@ class _UberProfilePageState extends State<UberProfilePage> {
                     color: Colors.grey[100],
                   ),
                   const ListTile(
-                    leading: FaIcon(FontAwesomeIcons.mailBulk),
+                    leading: FaIcon(FontAwesomeIcons.envelopesBulk),
                     title: Text("Messages",
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 16)),
@@ -239,7 +240,7 @@ class _UberProfilePageState extends State<UberProfilePage> {
                     onTap: () {
                       _uberProfileController.signOut();
                     },
-                    leading: const FaIcon(FontAwesomeIcons.signOutAlt),
+                    leading: const FaIcon(FontAwesomeIcons.rightFromBracket),
                     title: const Text("Logout",
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 16)),
@@ -247,7 +248,7 @@ class _UberProfilePageState extends State<UberProfilePage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      "V.1.0",
+                      "V.0.1",
                       style: TextStyle(
                           color: Colors.grey[400], fontWeight: FontWeight.w500),
                     ),

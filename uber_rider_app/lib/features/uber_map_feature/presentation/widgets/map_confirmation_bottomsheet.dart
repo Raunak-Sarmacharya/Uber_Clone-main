@@ -34,7 +34,7 @@ class MapConfirmationBottomSheet extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const FaIcon(FontAwesomeIcons.longArrowAltRight),
+                  const FaIcon(FontAwesomeIcons.rightLong),
                   Flexible(
                     child: Text(
                       _uberMapController.destinationPlaceName.value.toString(),
@@ -130,26 +130,18 @@ class MapConfirmationBottomSheet extends StatelessWidget {
                                             .split('/')
                                             .first ==
                                         'cars'
-                                    ? Text('₹ ' +
-                                        _uberMapController.carRent.value
-                                            .toString())
+                                    ?  Text('\$ ${_uberMapController.carRent.value}')
                                     : _uberMapController.availableDriversList
                                                 .value[index].vehicle!.path
                                                 .split('/')
                                                 .first ==
                                             'auto'
-                                        ? Text('₹ ' +
-                                            _uberMapController.autoRent.value
-                                                .toString())
-                                        : Text('₹ ' +
-                                            _uberMapController.bikeRent.value
-                                                .toString()),
-                                trailing: Text(_uberMapController
+                                        ? Text('\$ ${_uberMapController.autoRent.value}')
+                                        : Text('\$ ${_uberMapController.bikeRent.value}'),
+                                trailing: Text("${_uberMapController
                                         .availableDriversList
                                         .value[index]
-                                        .overall_rating
-                                        .toString() +
-                                    " ⭐"),
+                                        .overall_rating} ⭐"),
                                 onTap: () {
                                   _uberMapController.generateTrip(
                                       _uberMapController
