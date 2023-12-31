@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uber_rider_app/features/uber_auth_feature/data/data_sources/uber_auth_data_source.dart';
@@ -34,13 +36,29 @@ class UberAuthDataSourceImpl extends UberAuthDataSource {
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {},
       verificationFailed: (FirebaseAuthException e) {
-        Get.snackbar('Cant verify your phone. Double check your number ', e.code.toString(),
-            snackPosition: SnackPosition.BOTTOM);
+        Get.showSnackbar(
+          const GetSnackBar(backgroundColor: Colors.orange,
+              backgroundGradient: LinearGradient(colors: [Colors.deepOrange,Colors.red]),
+
+              title: "Error",
+            message: 'Cant verify phone Number. Double check your phone number ',
+            icon:  Icon(Icons.error),
+
+            duration: Duration(seconds: 3),snackPosition: SnackPosition.TOP
+          ),
+        );
       },
       codeSent: (String verificationId, int? forceResendingToken) async {
         verId.value = verificationId;
         Get.closeAllSnackbars();
-        Get.snackbar('done', "otp sent to $phoneNumber");
+        Get.showSnackbar(
+          const GetSnackBar(backgroundColor: Colors.teal,
+            title: "Success",
+            message: 'Otp sent to your phone number!',
+            icon:  Icon(Icons.check_circle),
+            duration: Duration(seconds: 3),
+          ),
+        );
         Get.to(() => const OtpVerificationPage());
       },
       codeAutoRetrievalTimeout: (String verificationId) async {},
@@ -55,7 +73,16 @@ class UberAuthDataSourceImpl extends UberAuthDataSource {
       await auth.signInWithCredential(authCredential);
       // Get.to(() => const UberHomePage());
     } on FirebaseAuthException catch (e) {
-      Get.snackbar('error', e.code.toString());
+      Get.showSnackbar(
+        const GetSnackBar(backgroundColor: Colors.orange,
+          backgroundGradient: LinearGradient(colors: [Colors.deepOrange,Colors.red]),
+
+          title: "Error",
+          message: 'Cant verify your otp. Double check your otp',
+          icon:  Icon(Icons.error),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 

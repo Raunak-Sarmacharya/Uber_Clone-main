@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -15,7 +16,7 @@ class UberHomeController extends GetxController {
   var currentLng = 52.7440212.obs;
   final Completer<GoogleMapController> controller = Completer();
 
-  // this was commented already ffrom before
+  // this was commented already from before
   @override
   void onInit() {
     getUserCurrentLocation();
@@ -31,18 +32,25 @@ class UberHomeController extends GetxController {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        Get.snackbar(
-          "Alert",
-          "Location permissions are denied",
-          snackPosition: SnackPosition.BOTTOM,
-        );
+
+        Get.showSnackbar(
+            const GetSnackBar(backgroundColor: Colors.red,
+              title: "Alert",
+              message: "Location permissions are denied",
+              icon:  Icon(Icons.add_alert_rounded),
+              duration: Duration(seconds: 10),snackStyle: SnackStyle.FLOATING,
+            ),);
       }
     } else if (permission == LocationPermission.deniedForever) {
-      Get.snackbar(
-        "Alert",
-        "Location permissions are permanently denied,please enable it from app setting",
-        snackPosition: SnackPosition.BOTTOM,
-      );
+
+      Get.showSnackbar(
+        const GetSnackBar(backgroundColor: Colors.red,
+          title: "Alert",
+          message:  "Location permissions are permanently denied,please enable it from app setting",
+
+          icon:  Icon(Icons.add_alert_rounded),
+          duration: Duration(seconds: 10),snackStyle: SnackStyle.FLOATING,
+        ),);
     } else {
       animateCamera();
     }

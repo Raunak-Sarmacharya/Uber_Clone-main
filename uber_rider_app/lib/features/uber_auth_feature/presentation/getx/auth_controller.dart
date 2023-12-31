@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uber_rider_app/features/uber_auth_feature/domain/use_cases/uber_add_profile_image_usecase.dart';
 import 'package:uber_rider_app/features/uber_auth_feature/domain/use_cases/uber_auth_check_user_status_usecase.dart';
@@ -40,8 +42,15 @@ class UberAuthController extends GetxController {
 
   verifyPhoneNumber(String phoneNumber) async {
     await uberAuthPhoneVerificationUseCase.call(phoneNumber);
-    Get.snackbar("Verifying Number", "Please wait !",
-        showProgressIndicator: true, duration: const Duration(seconds: 10));
+
+    Get.showSnackbar(
+      const GetSnackBar(backgroundColor: Colors.grey,
+        title: "Wait",
+        message: '"Verifying Number", "Please wait !"',
+        icon:  Icon(Icons.timelapse_rounded),
+        duration: Duration(seconds: 10),snackStyle: SnackStyle.FLOATING,
+      ),
+    );
   }
 
   verifyOtp(String otp) async {
@@ -69,7 +78,13 @@ class UberAuthController extends GetxController {
   pickProfileImg() async {
     String riderId = await uberAuthGetUserUidUseCase.call();
     String profileUrl = await uberAddProfileImgUseCase.call(riderId);
-    Get.snackbar("please wait", "Uploading Image....");
+    Get.showSnackbar(
+        const GetSnackBar(backgroundColor: Colors.grey,
+          title: "Wait",
+          message: 'Please wait , while your image is uploading',
+          icon:  Icon(Icons.timelapse_outlined),
+          snackPosition: SnackPosition.BOTTOM,
+        ),);
     profileImgUrl.value = profileUrl;
   }
 
@@ -86,13 +101,29 @@ class UberAuthController extends GetxController {
         0);
     await uberAuthGetUserUidUseCase.call().then((riderId) async {
       await uberProfileUpdateRiderUsecase.call(riderEntity, riderId);
-      Get.snackbar("uploading details!", "Please wait !",
-          showProgressIndicator: true, duration: const Duration(seconds: 10));
+      Get.showSnackbar(
+        const GetSnackBar(backgroundColor: Colors.grey,
+          title: "Wait",
+          message: "uploading details! ,Please wait !",
+          icon:  Icon(Icons.timer_outlined),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 10),
+        ),);
     });
+
+
     final userStatus = await checkUserStatus();
     if (userStatus) {
       Get.closeAllSnackbars();
       Get.snackbar("done", "registration successful!");
+      Get.showSnackbar(
+        const GetSnackBar(backgroundColor: Colors.teal,
+          title: "Done",
+          message: "registration successful!",
+          icon:  Icon(Icons.check_circle),
+
+
+        ),);
       Get.offAll(() => const UberHomePage());
     }
   }

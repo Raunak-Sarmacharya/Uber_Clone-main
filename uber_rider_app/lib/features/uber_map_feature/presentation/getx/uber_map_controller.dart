@@ -3,13 +3,17 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geocoding/geocoding.dart' as geoCoding;
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/directions.dart';
+import 'package:uber_rider_app/config/maps_api_key.dart';
 import 'package:uber_rider_app/features/uber_auth_feature/domain/use_cases/uber_auth_get_user_uid_usecase.dart';
 import 'package:uber_rider_app/features/uber_map_feature/data/models/generate_trip_model.dart';
 import 'package:uber_rider_app/features/uber_map_feature/domain/entities/uber_map_direction_entity.dart';
@@ -24,6 +28,9 @@ import 'package:uber_rider_app/features/uber_map_feature/domain/use_cases/uber_m
 import 'package:uber_rider_app/features/uber_map_feature/domain/use_cases/vehicle_details_usecase.dart';
 import 'package:uber_rider_app/features/uber_trips_history_feature/presentation/pages/uber_trips_history_page.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+
+import '../../data/models/uber_map_prediction_model.dart';
 
 class UberMapController extends GetxController {
   final UberMapPredictionUsecase uberMapPredictionUsecase;
@@ -100,7 +107,8 @@ class UberMapController extends GetxController {
     if (sourcePlace == "") {
       availableDriversList.clear();
       destinationPlaceName.value = destinationPlace;
-      List<Location> destinationLocations =
+
+      List<geoCoding.Location> destinationLocations =
           await locationFromAddress(destinationPlace); //get destination latlng
       destinationLatitude.value = destinationLocations[0].latitude;
       destinationLongitude.value = destinationLocations[0].longitude;
@@ -116,7 +124,7 @@ class UberMapController extends GetxController {
     } else {
       availableDriversList.clear();
       sourcePlaceName.value = sourcePlace;
-      List<Location> sourceLocations =
+      List<geoCoding.Location> sourceLocations =
           await locationFromAddress(sourcePlace); //get source latlng
       sourceLatitude.value = sourceLocations[0].latitude;
       sourceLongitude.value = sourceLocations[0].longitude;
@@ -135,6 +143,7 @@ class UberMapController extends GetxController {
         getDirection();
       } //get direction data
       else {
+        //tochange
         Get.snackbar("error", "both location can't be same!");
       }
     }
@@ -249,17 +258,16 @@ class UberMapController extends GetxController {
       _controller.animateCamera(CameraUpdate.newLatLngBounds(
           LatLngBounds(
               southwest: LatLng(sourceLatitude.value, sourceLongitude.value),
-              northeast:
-              LatLng(destinationLatitude.value, destinationLongitude.value)),
+              northeast: LatLng(
+                  destinationLatitude.value, destinationLongitude.value)),
           50));
-    }catch(e){
+    } catch (e) {
       _controller.animateCamera(CameraUpdate.newLatLngBounds(
           LatLngBounds(
-              southwest: LatLng(47.5620675,-52.7309601),
-              northeast:
-              LatLng(47.5620675,-52.7309601)),
+              southwest: LatLng(47.5620675, -52.7309601),
+              northeast: LatLng(47.5620675, -52.7309601)),
           50));
-      Get.snackbar("animateCameraPolyline ", "error! try again"+e.toString());
+      Get.snackbar("animateCameraPolyline ", "error! try again" + e.toString());
     }
     animateCamera(sourceLatitude.value, sourceLongitude.value);
   }

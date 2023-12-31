@@ -45,7 +45,7 @@ dependencies:
   google_maps_flutter: ^2.1.1  # map
   geolocator: ^10.1.0   # current loc
   geocoding: ^2.0.2   # place name to latlng
-  flutter_polyline_points: ^2.0.0   # polyline on map
+  flutter_polyline_points: ^1.0.0   # polyline on map
 
   # state management packages
   equatable: ^2.0.3
@@ -55,7 +55,7 @@ dependencies:
   get_it: ^7.2.0
 
   # Api call
-  http: ^1.1.2
+  http: ^0.13.1
 
   # Firebase packages
   firebase_auth: ^4.15.3
@@ -63,6 +63,8 @@ dependencies:
   firebase_storage: ^11.5.6
   firebase_core: ^2.24.2
   intl: ^0.19.0
+  flutter_google_places: ^0.3.0
+  google_maps_webservice: ^0.0.19
 
   # phone call
   flutter_phone_direct_caller: ^2.1.0
@@ -105,6 +107,9 @@ flutter:
     - assets/welcome_img.png
     - assets/nonet.jpg
     - assets/home_car.png
+
+    - assets/Animation - 1704051232367.json
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

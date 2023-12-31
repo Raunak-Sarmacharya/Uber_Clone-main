@@ -10,6 +10,8 @@ import 'package:uber_rider_app/features/uber_map_feature/presentation/getx/uber_
 import 'package:uber_rider_app/features/uber_map_feature/presentation/widgets/map_confirmation_bottomsheet.dart';
 import 'package:uber_rider_app/injection_container.dart' as di;
 
+import '../../data/models/uber_map_prediction_model.dart';
+
 class MapWithSourceDestinationField extends StatefulWidget {
   final CameraPosition defaultCameraPosition;
   final CameraPosition newCameraPosition;
@@ -147,6 +149,7 @@ class _MapWithSourceDestinationFieldState
                                       BorderRadius.all(Radius.circular(12))),
                               child: TextField(
                                 onChanged: (val) {
+                                  // autocomplete
                                   _uberMapController.getPredictions(
                                       val, 'source');
                                 },
@@ -171,7 +174,13 @@ class _MapWithSourceDestinationFieldState
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(12))),
                               child: TextField(
+                                //   onTap: () async {
+                                //   Prediction? p = await  _uberMapController.showGoogleAutoComplete(context);
+                                //   destinationController
+                                //     .text = p!.description!;
+                                // },
                                 onChanged: (val) {
+                                  // autocomplete
                                   _uberMapController.getPredictions(
                                       val, 'destination');
                                 },
@@ -179,11 +188,12 @@ class _MapWithSourceDestinationFieldState
                                   hintText: "Enter Destination Place",
                                   border: InputBorder.none,
                                 ),
-                                controller: destinationController
-                                  ..text = _uberMapController
+                                  controller: destinationController
+                                    ..text =_uberMapController
                                       .destinationPlaceName.value,
+                                ),
                               ),
-                            ),
+
                           ],
                         ),
                       ),

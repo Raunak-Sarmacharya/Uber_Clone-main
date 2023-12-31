@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:uber_rider_app/config/maps_api_key.dart';
 import 'package:uber_rider_app/features/uber_map_feature/data/data_sources/uber_map_data_source.dart';
@@ -26,10 +27,29 @@ class UberMapDataSourceImpl extends UberMapDataSource {
 
   @override
   Future<PredictionsList> getUberMapPrediction(String placeName) async {
-    final autoCompleteUrl = Uri.https(
-        baseUrl,
-        '/maps/api/place/autocomplete/json',
-        {'input': placeName, 'types': 'geocode', 'key': apiKey});
+    //bounds for st johns
+    LatLngBounds bounds = LatLngBounds(
+      southwest: LatLng(47.5663346, -52.7503388),
+      northeast: LatLng(47.5745813, -52.7561963),
+    );
+    final parameters = {
+      'input': placeName,
+      'types': 'geocode',
+      'key': apiKey,
+      'components': 'country:ca',
+    };
+
+    parameters['location'] =
+        '${bounds.northeast.latitude},${bounds.southwest.longitude}';
+    parameters['radius'] = '50000'; // radius in meters
+
+    final autoCompleteUrl =
+        Uri.https(baseUrl, '/maps/api/place/autocomplete/json', parameters);
+
+    // final autoCompleteUrl = Uri.https(
+    //     baseUrl,
+    //     '/maps/api/place/autocomplete/json',
+    //     {'input': placeName, 'types': 'geocode', 'key': apiKey,'components': 'country:ca','bounds': defaultBounds});
     final response = await client.get(
       autoCompleteUrl,
       headers: {'Content-Type': 'application/json'},
@@ -76,26 +96,21 @@ class UberMapDataSourceImpl extends UberMapDataSource {
   @override
   Future<RentalChargeModel> getRentalChargeForVehicle(double kms) async {
     final pricesCollection = firestore.collection("prices");
-    try{
-    DocumentSnapshot charges =  await pricesCollection.doc("vehicles").get()
-    ;
+    try {
+      DocumentSnapshot charges = await pricesCollection.doc("vehicles").get();
 
+      //fetch per km charge from prices collection and multiply by kms
+      // final double rickShawRent = kms * charges.get("auto_rickshaw");
+      final double carRent = kms * charges.get("car");
+      // final double bikeRent = kms * charges.get("bike");
 
-
-
-    //fetch per km charge from prices collection and multiply by kms
-    // final double rickShawRent = kms * charges.get("auto_rickshaw");
-    final double carRent = kms * charges.get("car");
-    // final double bikeRent = kms * charges.get("bike");
-
-    final vehicleRent = RentalChargeModel(
-        auto_rickshaw: 0, car: carRent, bike: 0);
-    // print(vehicleRent.car);
-    return vehicleRent;
-    }catch(e){
+      final vehicleRent =
+          RentalChargeModel(auto_rickshaw: 0, car: carRent, bike: 0);
+      // print(vehicleRent.car);
+      return vehicleRent;
+    } catch (e) {
       Get.snackbar("Show me the error", e.toString());
-      return RentalChargeModel(
-        auto_rickshaw: 0, car: 0, bike: 0);
+      return RentalChargeModel(auto_rickshaw: 0, car: 0, bike: 0);
     }
   }
 
@@ -146,7 +161,6 @@ class UberMapDataSourceImpl extends UberMapDataSource {
         await genarateTripCollection.doc(tripId).update({'driver_id': null});
       } else {
         await genarateTripCollection.doc(tripId).get().then((value) async {
-
           if (value.data()?['ready_for_trip'] == false) {
             await genarateTripCollection.doc(tripId).delete();
           }

@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:uber_rider_app/features/uber_auth_feature/presentation/getx/auth_controller.dart';
 import 'package:uber_rider_app/features/uber_auth_feature/presentation/widgets/uber_auth_register_textfield_widget.dart';
+
+import '../../../uber_map_feature/presentation/getx/uber_map_controller.dart';
+import 'package:uber_rider_app/injection_container.dart' as di;
+
+
 
 class UberAuthRegistrationPage extends StatefulWidget {
   const UberAuthRegistrationPage({Key? key}) : super(key: key);
@@ -22,6 +28,7 @@ class _UberAuthRegistrationPageState extends State<UberAuthRegistrationPage> {
   final TextEditingController homeAddressController = TextEditingController();
   final TextEditingController workAddressController = TextEditingController();
   final UberAuthController _uberAuthController = Get.find();
+  final UberMapController _uberMapController= Get.put(di.sl<UberMapController>());
 
   @override
   void dispose() {
@@ -80,7 +87,7 @@ class _UberAuthRegistrationPageState extends State<UberAuthRegistrationPage> {
                     emailController,
                     cityController,
                     homeAddressController,
-                    workAddressController),
+                    workAddressController,_uberMapController),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -89,27 +96,39 @@ class _UberAuthRegistrationPageState extends State<UberAuthRegistrationPage> {
                       if (nameController.text.isNotEmpty &&
                           emailController.text.isNotEmpty &&
                           cityController.text.isNotEmpty &&
-                          homeAddressController.text.isNotEmpty &&
-                          workAddressController.text.isNotEmpty &&
                           GetUtils.isEmail(emailController.text)) {
+
                         _uberAuthController.addRiderprofile(
                             nameController.text,
                             emailController.text,
                             cityController.text,
-                            homeAddressController.text,
-                            workAddressController.text);
+                            homeAddressController.text.isNotEmpty? homeAddressController.text: "None",
+                            workAddressController.text.isNotEmpty? workAddressController.text: "None");
+
+
+
+
                       } else {
-                        Get.snackbar("error", "invalid values!");
+                        Get.showSnackbar(
+                          const GetSnackBar(backgroundColor: Colors.orange,
+                              backgroundGradient: LinearGradient(colors: [Colors.deepOrange,Colors.red]),
+                              title: "Error",
+                              message: 'Please fill all the fields',
+                              icon:  Icon(Icons.error),
+                              duration: Duration(seconds: 3),snackPosition: SnackPosition.TOP
+                          ),
+                        );
                       }
                     },
-                    style: ButtonStyle(
+                    style: ButtonStyle(overlayColor: MaterialStateProperty.all<Color>(Colors.black),elevation:
+                      MaterialStateProperty.all<double>(5),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black),
+                          MaterialStateProperty.all<Color>(Colors.teal),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24.0),
+                          borderRadius: BorderRadius.circular(40.0),
                         ),
                       ),
                     ),
@@ -117,7 +136,7 @@ class _UberAuthRegistrationPageState extends State<UberAuthRegistrationPage> {
                       padding: EdgeInsets.all(14.0),
                       child: Text(
                         'Create Account',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 20),
                       ),
                     ),
                   ),
@@ -139,7 +158,7 @@ Widget buildStaticRegisterPageBody(
     TextEditingController email,
     TextEditingController city,
     TextEditingController homeAddress,
-    TextEditingController workAddress) {
+    TextEditingController workAddress,UberMapController uberMapController) {
   return Column(
     children: [
       Container(
@@ -177,6 +196,7 @@ Widget buildStaticRegisterPageBody(
       const SizedBox(
         height: 10,
       ),
+      // not required field.
       TextFieldWidget(
         labelText: 'Home Address',
         textType: 'Enter your address',
@@ -186,11 +206,12 @@ Widget buildStaticRegisterPageBody(
       const SizedBox(
         height: 10,
       ),
-      TextFieldWidget(
+      // not required field.
+      TextCompleteFieldWidget(
         labelText: 'Work Address',
         textType: 'Enter your work address',
         inputType: TextInputType.text,
-        controller: workAddress,
+        controller: workAddress, uberMapController: uberMapController, placeName:"work"
       ),
       const SizedBox(
         height: 10,
