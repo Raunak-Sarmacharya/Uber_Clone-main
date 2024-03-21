@@ -4,7 +4,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:uber_rider_app/features/uber_profile_feature/presentation/getx/uber_profile_controller.dart';
 
-// tochange
+// this part isn't functional for the real life scenario
 displayAddMoneyDialog(
     BuildContext context, UberProfileController uberProfileController) async {
   final _textFieldController = TextEditingController();

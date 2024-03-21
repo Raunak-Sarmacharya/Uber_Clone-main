@@ -125,10 +125,10 @@ class _UberProfilePageState extends State<UberProfilePage> {
                           children: [
                             FaIcon(FontAwesomeIcons.wallet),
                             SizedBox(
-                              height: 5,
+                              height: 4.5,
                             ),
                             Text(
-                              "Wallet",
+                              "My Wallet",
                               style: TextStyle(fontWeight: FontWeight.w600),
                             )
                           ],
@@ -173,7 +173,7 @@ class _UberProfilePageState extends State<UberProfilePage> {
                         children: [
                           // tochange
                           const Text(
-                            "Uber Cash",
+                            "Puff Cash",
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 18),
                           ),
@@ -226,7 +226,7 @@ class _UberProfilePageState extends State<UberProfilePage> {
                   ),
                   const ListTile(
                     leading: FaIcon(FontAwesomeIcons.userAstronaut),
-                    title: Text("Drive or Deliver with Uber",
+                    title: Text("Drive or Deliver with Puff",
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 16)),
                   ),

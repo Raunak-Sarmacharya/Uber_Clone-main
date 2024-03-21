@@ -1,3 +1,5 @@
+
+// Importing necessary packages and modules
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -54,7 +56,13 @@ import 'features/uber_map_feature/presentation/getx/uber_live_tracking_controlle
 import 'features/uber_profile_feature/domain/use_cases/uber_profile_update_rider_usecase.dart';
 import 'features/uber_trips_history_feature/data/data_sources/uber_trips_history_data_source_impl.dart';
 
+// GetIt instance for dependency injection
 final sl = GetIt.instance;
+
+
+// This function initializes all the dependencies for the project.
+// It registers network checker, current location, map feature, profile feature, auth feature, and history feature.
+// This function is called at the start of the application.
 
 Future<void> init() async {
   //network getx
@@ -82,7 +90,7 @@ Future<void> init() async {
   sl.registerLazySingleton<UserCurrentLocationDataSource>(
       () => UserCurrentLocationDataSourceImpl());
 
-  // feature map
+  // Map Feature
   // getx
 
   sl.registerFactory<UberMapController>(() => UberMapController(
@@ -224,7 +232,9 @@ Future<void> init() async {
   sl.registerLazySingleton<UberTripsHistoryDataSource>(
       () => UberTripsHistoryDataSourceImpl(firestore: sl.call()));
 
-  //External
+  // Registering External Firebase Dependencies
+  // These are the actual Firebase instances that will be used to interact with Firebase services.
+
   final auth = FirebaseAuth.instance;
   final fireStore = FirebaseFirestore.instance;
   final firebaseStorage = FirebaseStorage.instance;
