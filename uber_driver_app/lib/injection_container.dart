@@ -1,3 +1,4 @@
+// Importing necessary packages and modules
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,13 +40,14 @@ import 'features/uber_trips_history_feature/data/repositories/trip_history_repos
 import 'features/uber_trips_history_feature/domain/repositories/trip_history_repository.dart';
 import 'features/uber_trips_history_feature/domain/use_cases/get_trip_history_usecase.dart';
 
+// GetIt instance for dependency injection
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  //////////////////////////////////////////////////////////////////
-  ////////////////////// Cubits ///////////////////////////////////
-  //////////////////////////////////////////////////////////////////
+  // Registering Cubits
+  // Cubits are used for state management in Flutter. They take in an event and output states.
 
+  // UserReqCubit is responsible for managing the state related to user requests.
   sl.registerFactory(
     () => UserReqCubit(
       tripHistoryUseCase: sl.call(),
@@ -72,9 +74,10 @@ Future<void> init() async {
         driverLocationUseCase: sl.call(), getUserUidUseCase: sl.call()),
   );
 
-  //////////////////////////////////////////////////////////////////
-  ////////////////////// GetX Controllers //////////////////////////
-  //////////////////////////////////////////////////////////////////
+  // Registering GetX Controllers
+  // GetX is a state management solution that is commonly used in Flutter.
+
+  // UberAuthController is responsible for managing the state related to user authentication.
 
   sl.registerFactory<UberAuthController>(() => UberAuthController(
       uberAuthIsSignInUseCase: sl.call(),
@@ -85,7 +88,7 @@ Future<void> init() async {
       uberProfileUpdateDriverUsecase: sl.call(),
       uberAddProfileImgUseCase: sl.call(),
       uberUploadDriverVehicleDataUseCase: sl.call()));
-
+// Other GetX Controllers
   sl.registerFactory<UberProfileController>(() => UberProfileController(
       uberProfileUpdateDriverUsecase: sl.call(),
       uberAuthSignOutUseCase: sl.call(),
@@ -93,11 +96,11 @@ Future<void> init() async {
       uberAuthGetUserUidUseCase: sl.call(),
       uberProfileGetRiderProfileUsecase: sl.call()));
 
-  //////////////////////////////////////////////////////////////////
-  ////////////////////// Use Cases /////////////////////////////////
-  //////////////////////////////////////////////////////////////////
+  // Registering Use Cases
+  // Use cases are part of the clean architecture and represent different actions a user can take in the application.
 
-  // Location
+  // DriverUpdateUseCase is responsible for updating the driver's location.
+
   sl.registerLazySingleton(() => DriverUpdateUseCase(repository: sl.call()));
   sl.registerLazySingleton(() => DriverLocationUseCase(repository: sl.call()));
 
@@ -131,9 +134,10 @@ Future<void> init() async {
   sl.registerLazySingleton<UberAuthSignOutUseCase>(
       () => UberAuthSignOutUseCase(uberAuthRepository: sl.call()));
 
-  //////////////////////////////////////////////////////////////////
-  ////////////////////// Repositories //////////////////////////////
-  //////////////////////////////////////////////////////////////////
+// Registering Repositories
+  // Repositories are used to handle data operations. They provide a clean API so that the rest of the app can retrieve this data easily.
+
+  // UberAuthRepository is responsible for handling data operations related to user authentication.
 
   sl.registerLazySingleton<UberAuthRepository>(
       () => UberAuthRepositoryImpl(uberAuthDataSource: sl.call()));
@@ -148,9 +152,10 @@ Future<void> init() async {
   sl.registerLazySingleton<UberProfileRepository>(
       () => UberProfileRepositoryImpl(uberProfileDataSource: sl.call()));
 
-  //////////////////////////////////////////////////////////////////
-  ////////////////////// Data Sources //////////////////////////////
-  //////////////////////////////////////////////////////////////////
+  // Registering Data Sources
+  // Data sources are the actual classes that retrieve data from a remote server or a local database.
+
+  // FirebaseDataSource is responsible for retrieving data from Firebase.
 
   sl.registerLazySingleton<FirebaseDataSource>(
     () => FirebaseDataSourceImpl(),
@@ -165,9 +170,9 @@ Future<void> init() async {
   sl.registerLazySingleton<UberProfileDataSource>(
       () => UberProfileDataSourceImpl(firestore: sl.call(), auth: sl.call()));
 
-  //////////////////////////////////////////////////////////////////
-  //////////////// External Firebase Dependency ////////////////////
-  //////////////////////////////////////////////////////////////////
+
+  // Registering External Firebase Dependencies
+  // These are the actual Firebase instances that will be used to interact with Firebase services.
 
   final auth = FirebaseAuth.instance;
   final fireStore = FirebaseFirestore.instance;

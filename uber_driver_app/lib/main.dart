@@ -1,3 +1,4 @@
+// Importing necessary packages and modules
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,9 +10,14 @@ import 'core/internet/internet_cubit.dart';
 import 'injection_container.dart' as di;
 
 Future<void> main() async {
+// Ensuring that widget binding is initialized.
   WidgetsFlutterBinding.ensureInitialized();
+  // Initializing Firebase app.
   await Firebase.initializeApp();
+  // Setting up dependency injection.
   await di.init();
+  // Setting the preferred device orientation to portrait up.
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
@@ -24,6 +30,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Uber Driver',
       debugShowCheckedModeBanner: false,
+      // BlocProvider for InternetCubit to check internet connection
       home: BlocProvider<InternetCubit>(
         create: (BuildContext context) => di.sl<InternetCubit>(),
         child: const UberSplashScreen(),
